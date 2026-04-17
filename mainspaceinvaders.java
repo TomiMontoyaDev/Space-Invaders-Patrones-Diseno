@@ -35,7 +35,7 @@ public class mainspaceinvaders {
             public void actionPerformed(ActionEvent e) {
                 gameLogic.player.x += 30;
                 panel.repaint();
-            }
+            } 
         });
 
         panel.getActionMap().put("shoot", new AbstractAction() {

@@ -38,23 +38,13 @@ public class GamePanel extends JPanel {
             g2d.setColor(Color.RED);
             g2d.fillRect(b.x, b.y, 4, 12);
         }
+
+        // Dibujar Score y Vidas
+        g2d.setColor(Color.WHITE);  
+        g2d.setFont(new Font("Arial", Font.BOLD, 16));
+        g2d.drawString("Score: " + logic.player.score, 10, 20);
+        g2d.drawString("Vidas: " + logic.player.vidas, 10, 40);
     }
 
-    // Puntaje
-    public void drawScore(Graphics2D g2d, int score) {
-        g2d.setColor(Color.WHITE);
-        g2d.setFont(new Font("Arial", Font.BOLD, 20));
-        g2d.drawString("Score: " + score, 10, 30);
-    }
-
-    // Puntaje logica
-    public int calculateScore() {
-        int score = 0;
-        for (Alien a : logic.aliens) {
-            if (!a.vivo) {
-                score += 10; // Cada alien muerto vale 10 puntos
-            }
-        }
-        return score;
-    }
+    
 }
