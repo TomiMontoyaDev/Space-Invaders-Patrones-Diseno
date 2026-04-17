@@ -7,6 +7,7 @@ public class SpaceInvaders {
     public ArrayList<Bala> balanave;
     public ArrayList<Bala> balasalien;
     private int alienDirection = 1; // 1 para derecha, -1 para izquierda
+    private int score = 0;
 
     public SpaceInvaders() {
 
@@ -92,6 +93,46 @@ public class SpaceInvaders {
             alienDirection *= -1;
             for (Alien a : aliens) {
                 a.y += 5;
+            }
+        }
+
+        // Aliens disparan aleatoriamente       
+        for (Alien a : aliens) {
+            if (a.vivo && Math.random() < 0.01) { // 1% de probabilidad por actualización
+                Bala balaAlien = new Bala(a.x + 18, a.y + 40); // Ajusta para que salga del centro del alien
+                balasalien.add(balaAlien);
+            }
+        }   
+
+        // Eliminar aliens muertos
+        for (int i = 0; i < aliens.size(); i++) {
+            if (!aliens.get(i).vivo) {
+                aliens.remove(i);
+                i--;
+            }
+        }
+
+        // Ganar si todos los aliens son muertos
+        if (aliens.isEmpty()) {
+            System.out.println("¡Has ganado!");
+        }
+
+        // Perder si la nave se sale de la pantalla
+        if (player.y < 0) {
+            System.out.println("¡Has perdido!");
+        }
+
+        // Perder si la nave se choca con un alien
+        for (Alien a : aliens) {
+            if (a.vivo && a.x > player.x && a.x < player.x + 50 && a.y > player.y && a.y < player.y + 50) {
+                System.out.println("¡Has perdido!");
+            }
+        }
+          
+        // Actualizar puntaje
+        for (Alien a : aliens) {
+            if (!a.vivo) {
+                score += 10; // Cada alien muerto vale 10 puntos
             }
         }
     }
