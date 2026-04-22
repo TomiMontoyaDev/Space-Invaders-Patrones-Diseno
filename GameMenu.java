@@ -19,7 +19,7 @@ public class GameMenu extends JFrame {
         JLabel titleLabel = new JLabel("SPACE INVADERS", SwingConstants.CENTER);
 
         titleLabel.setFont(new Font("Arial", Font.BOLD, 32));
-        titleLabel.setForeground(Color.GREEN);
+        titleLabel.setForeground(Color.CYAN);
         panel.add(titleLabel);
 
         // Crear botón de inicio
@@ -39,7 +39,7 @@ public class GameMenu extends JFrame {
         JButton exitButton = new JButton("Exit");
         exitButton.setFont(new Font("Arial", Font.BOLD, 24));
         exitButton.setBackground(Color.RED);
-        startButton.setForeground(Color.BLACK);
+        exitButton.setForeground(Color.BLACK);
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -59,13 +59,13 @@ public class GameMenu extends JFrame {
             }
         });
 
-        // Agregar botón de salir al panel
-        panel.add(exitButton);
         // Agregar botón al panel
         panel.add(startButton);
         add(panel);
         // Agregar botón de créditos al panel
         panel.add(creditsButton);
+        // Agregar botón de salir al panel
+         panel.add(exitButton);
     }
 
     public static void main(String[] args) {

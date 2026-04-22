@@ -4,6 +4,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
+import javax.swing.SwingUtilities;
 
 public class mainspaceinvaders {
     public static void main(String[] args) {
@@ -61,9 +62,25 @@ public class mainspaceinvaders {
         panel.requestFocusInWindow();
 
         // 6. Bucle del juego (Game Loop)
+        final boolean[] endHandled = {false};
         Timer timer = new Timer(30, e -> {
             gameLogic.update();
             panel.repaint();
+
+            if (!endHandled[0] && (gameLogic.isGameOver() || gameLogic.isGameWon())) {
+                endHandled[0] = true;
+                ((Timer) e.getSource()).stop();
+                frame.dispose();
+                SwingUtilities.invokeLater(() -> {
+                    GameOver gameOver = new GameOver();
+                    gameOver.setVisible(true);
+                    
+                });
+                SwingUtilities.invokeLater(() -> {
+                    GameWon gameWon = new GameWon();
+                    gameWon.setVisible(true);
+                });
+            }
         });
         timer.start();
         

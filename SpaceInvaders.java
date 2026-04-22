@@ -7,6 +7,8 @@ public class SpaceInvaders {
     public ArrayList<Bala> balanave;
     public ArrayList<Bala> balasalien;
     private int alienDirection = 1; // 1 para derecha, -1 para izquierda
+    private boolean gameOver = false;
+    private boolean gameWon = false;
 
     public SpaceInvaders() {
 
@@ -33,6 +35,10 @@ public class SpaceInvaders {
     }
 
     public void update() {
+        if (gameOver || gameWon) {
+            return;
+        }
+
         // Mover balas de la nave hacia arriba
         for (int i = 0; i < balanave.size(); i++) {
             Bala b = balanave.get(i);
@@ -116,38 +122,40 @@ public class SpaceInvaders {
         // Ganar si todos los aliens son muertos
         if (aliens.isEmpty()) {
             System.out.println("¡Has ganado!");
-            GameOver gameOver = new GameOver();
-            gameOver.setVisible(true);
+            gameWon = true;
+            return;
         }
 
         // Perder si la nave se sale de la pantalla
         if (player.y < 0) {
-            GameOver gameOver = new GameOver();
-            gameOver.setVisible(true);
             player.vidas--;
+            if (player.vidas <= 0) {
+                gameOver = true;
+            }
         }
 
         // Perder si la nave se choca con un alien
         for (Alien a : aliens) {
             if (a.vivo && a.x > player.x && a.x < player.x + 50 && a.y > player.y && a.y < player.y + 50) {
-                GameOver gameOver = new GameOver();
-            gameOver.setVisible(true);
                 player.vidas--;
+                if (player.vidas <= 0) {
+                    gameOver = true;
+                    return;
+                }
             }
         }
 
         // Verificar vidas
         if (player.vidas <= 0) {   
-            GameOver gameOver = new GameOver();
-             gameOver.setVisible(true);
-             try {
-                Thread.sleep(10000); // Esperar 10 segundos antes de cerrar el juego
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-             finally {
-                System.exit(0);
-            }
-             }
+            gameOver = true;
         }
     }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public boolean isGameWon() {
+        return gameWon;
+    }
+}

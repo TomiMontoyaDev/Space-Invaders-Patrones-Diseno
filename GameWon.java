@@ -3,30 +3,30 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GameOver extends JFrame {
-    public GameOver() {
-        setTitle("Game Over");
+public class GameWon extends JFrame {
+    public GameWon() {
+        setTitle("Game Won");
         setSize(400, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
        
 
-        JLabel gameOverLabel = new JLabel("GAME OVER", SwingConstants.CENTER);
-        gameOverLabel.setFont(new Font("Arial", Font.BOLD, 32));
-        gameOverLabel.setForeground(Color.RED);
-        gameOverLabel.setBackground(Color.BLACK);
-        gameOverLabel.setOpaque(true);
-        add(gameOverLabel, BorderLayout.CENTER);
+        JLabel gameWonLabel = new JLabel("GAME WON!", SwingConstants.CENTER);
+        gameWonLabel.setFont(new Font("Arial", Font.BOLD, 32));
+        gameWonLabel.setForeground(Color.GREEN);
+        gameWonLabel.setBackground(Color.BLACK);
+        gameWonLabel.setOpaque(true);
+        add(gameWonLabel, BorderLayout.CENTER);
 
-        JButton retryButton = new JButton("Retry");
+        JButton retryButton = new JButton("FINAL LEVEL");
         retryButton.setFont(new Font("Arial", Font.BOLD, 24));
         retryButton.setBackground(Color.GREEN);
         retryButton.setForeground(Color.BLACK);
         retryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose(); // Cerrar la ventana de Game Over
+                dispose(); // Cerrar la ventana de Game Won
                 mainspaceinvaders.main(null); // Reiniciar el juego
             }
         });
