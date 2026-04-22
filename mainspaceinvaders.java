@@ -15,7 +15,10 @@ public class mainspaceinvaders {
 
         // 3. Crear ventana
         JFrame frame = new JFrame("Space Invaders");
+        GameMenu menu = new GameMenu();
+        frame.setContentPane(menu.getContentPane()); // Mostrar el menú inicialmente
         GamePanel panel = new GamePanel(gameLogic);
+        
 
         // 4. Configurar controles con Key Bindings (mas fiable que KeyListener)
         panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "moveLeft");

@@ -116,27 +116,38 @@ public class SpaceInvaders {
         // Ganar si todos los aliens son muertos
         if (aliens.isEmpty()) {
             System.out.println("¡Has ganado!");
-            System.exit(0); 
+            GameOver gameOver = new GameOver();
+            gameOver.setVisible(true);
         }
 
         // Perder si la nave se sale de la pantalla
         if (player.y < 0) {
-            System.out.println("¡Has perdido!");
+            GameOver gameOver = new GameOver();
+            gameOver.setVisible(true);
             player.vidas--;
         }
 
         // Perder si la nave se choca con un alien
         for (Alien a : aliens) {
             if (a.vivo && a.x > player.x && a.x < player.x + 50 && a.y > player.y && a.y < player.y + 50) {
-                System.out.println("¡Has perdido!");
+                GameOver gameOver = new GameOver();
+            gameOver.setVisible(true);
                 player.vidas--;
             }
         }
 
         // Verificar vidas
-        if (player.vidas <= 0) {    
-            System.out.println("¡Has perdido!");
-            System.exit(0);
+        if (player.vidas <= 0) {   
+            GameOver gameOver = new GameOver();
+             gameOver.setVisible(true);
+             try {
+                Thread.sleep(10000); // Esperar 10 segundos antes de cerrar el juego
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+             finally {
+                System.exit(0);
+            }
+             }
         }
     }
-}
