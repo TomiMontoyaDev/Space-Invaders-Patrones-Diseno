@@ -9,6 +9,9 @@ public class SpaceInvaders {
     private int alienDirection = 1; // 1 para derecha, -1 para izquierda
     private boolean gameOver = false;
     private boolean gameWon = false;
+    private final long playerShootCooldownMs = 700;
+    private final long alienShootCooldownMs = 900;
+    private long lastPlayerShotTime = 0L;
 
     public SpaceInvaders() {
 
@@ -29,9 +32,15 @@ public class SpaceInvaders {
     }
 
     public void shoot() {
+        long now = System.currentTimeMillis();
+        if (now - lastPlayerShotTime < playerShootCooldownMs) {
+            return;
+        }
+
         // Crear una bala desde la posición de la nave
         Bala nuevaBala = new Bala(player.x + 20, player.y); // Ajusta el x para que salga del centro de la nave
         balanave.add(nuevaBala);
+        lastPlayerShotTime = now;
     }
 
     public void update() {
@@ -104,10 +113,12 @@ public class SpaceInvaders {
         }
 
         // Aliens disparan aleatoriamente       
+        long now = System.currentTimeMillis();
         for (Alien a : aliens) {
-            if (a.vivo && Math.random() < 0.01) { // 1% de probabilidad por actualización
+            if (a.vivo && a.canShoot(now, alienShootCooldownMs) && Math.random() < 0.01) { // 1% de probabilidad por actualización
                 Bala balaAlien = new Bala(a.x + 18, a.y + 40); // Ajusta para que salga del centro del alien
                 balasalien.add(balaAlien);
+                a.registerShot(now);
             }
         }   
 
@@ -149,6 +160,9 @@ public class SpaceInvaders {
         if (player.vidas <= 0) {   
             gameOver = true;
         }
+
+        // Delay en balas para evitar que se disparen demasiado rápido
+        
     }
 
     public boolean isGameOver() {
@@ -157,5 +171,9 @@ public class SpaceInvaders {
 
     public boolean isGameWon() {
         return gameWon;
+    }
+
+    public void updateBullets() {
+        // Metodo mantenido por compatibilidad. El cooldown ya se controla con timestamps.
     }
 }

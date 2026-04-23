@@ -67,7 +67,7 @@ public class mainspaceinvaders {
             gameLogic.update();
             panel.repaint();
 
-            if (!endHandled[0] && (gameLogic.isGameOver() || gameLogic.isGameWon())) {
+            if (!endHandled[0] && (gameLogic.isGameOver())) {
                 endHandled[0] = true;
                 ((Timer) e.getSource()).stop();
                 frame.dispose();
@@ -76,9 +76,16 @@ public class mainspaceinvaders {
                     gameOver.setVisible(true);
                     
                 });
+            }
+
+            if (!endHandled[0] && (gameLogic.isGameWon())) {
+                endHandled[0] = true;
+                ((Timer) e.getSource()).stop();
+                frame.dispose();
                 SwingUtilities.invokeLater(() -> {
                     GameWon gameWon = new GameWon();
                     gameWon.setVisible(true);
+                    
                 });
             }
         });
